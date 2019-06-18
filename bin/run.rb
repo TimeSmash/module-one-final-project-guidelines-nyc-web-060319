@@ -14,12 +14,15 @@ def login
   if input == "new"
     puts "Please choose a username"
     new_username = gets.chomp
-    Player.create(name: new_username)
-    main_menu
+    player = Player.create(name: new_username)
+    main_menu(player)
   else
     Player.all.each do |player|
       if input == player.name
-        main_menu
+        main_menu(player)
+        # user = Player.all.find_by(name: input)
+        # main_menu(user)
+        #
       else
         puts "Invalid username. Please try again or create a new account."
       end
@@ -27,7 +30,9 @@ def login
   end
 end
 
-def main_menu
+def main_menu(player)
+  #main_menu(user)
+  #user = Player.all.find_by(name: input) from before
   puts "Welcome #{player.name}! What would you like to do?"
   puts ""
   puts "[1] Add a new game"
@@ -37,20 +42,24 @@ def main_menu
   puts "[5] Exit"
 
   choice = gets.chomp
-  main_menu_action(choice)
+  main_menu_action(choice,player)
 end
 
-def main_menu_action(choice)
-  case input
-  when 1 #instantiates new game
+def main_menu_action(choice,player)
+  #need to somehow have choice == 
+  case choice
+  when "1" #instantiates new game
+    # Game.create?
   when "2" #instantiate new review
-    Review.create
-  when "3" #shows all reviews
-    Review.all
+    # puts "Choice 2 pass"
+    player.create_review(player)
+  when "3" #shows all of user's reviews
+    player.my_reviews(player)
   when "4"
     #find review by name
   when "5"
     puts "Goodbye, #{player.name}!"
+    exit
   end
 end
 
@@ -73,6 +82,7 @@ def review_menu_action
     main_menu
   end
 end
-
+Review.all.destroy_all
 start
 login
+main_menu

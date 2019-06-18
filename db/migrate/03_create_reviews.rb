@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[4.2]
       t.integer :player_id
       t.integer :game_id
       t.float :rating
-      t.string :text
+      t.string :content
     end
   end
 end
