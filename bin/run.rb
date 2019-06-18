@@ -14,8 +14,8 @@ def login
   if input == "new"
     puts "Please choose a username"
     new_username = gets.chomp
-    player = Player.create(name: new_username)
-    main_menu(player)
+    player = Player.create(name: new_username) #PLAYER_VAR IS DEFINED HERE
+    main_menu(player) #Runs main menu, referring to player as the one running commands
   else
     Player.all.each do |player|
       if input == player.name
@@ -48,15 +48,15 @@ end
 def main_menu_action(choice,player)
   #need to somehow have choice == 
   case choice
-  when "1" #instantiates new game
+  when "1" #instantiates new game, 
     # Game.create?
   when "2" #instantiate new review
-    # puts "Choice 2 pass"
     player.create_review(player)
   when "3" #shows all of user's reviews
     player.my_reviews(player)
   when "4"
     #find review by name
+    #player.find_my_review_by_game_name
   when "5"
     puts "Goodbye, #{player.name}!"
     exit
@@ -82,6 +82,8 @@ def review_menu_action
     main_menu
   end
 end
+
+
 Review.all.destroy_all
 start
 login

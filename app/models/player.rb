@@ -14,7 +14,7 @@ class Player < ActiveRecord::Base
 
     def my_reviews(player)
         binding.pry
-        puts "Here are all reviews: #{Review.all}"
+        # puts "Here are all reviews: #{Review.all}"
         puts "Here are all reviews authored by you(#{player.name}): #{Review.all.select do |review|
             review.player_id == player.id     
         end}"
@@ -22,6 +22,12 @@ class Player < ActiveRecord::Base
         if gets.chomp =~ /[yY]/
             main_menu(player)
         end 
+    end
+
+    def find_my_review_by_game_name
+        puts "Please enter the name of the game you want to find the review for."
+        game_name = gets.chomp
+        my_reviews.find_by(game.name == game_name)
     end
 
     def update_review #SEE Pages document
@@ -63,7 +69,7 @@ class Player < ActiveRecord::Base
         
         #Look thru all reviews, see if any of their Game obj's @name == game_name
         #first, get all game objects (Review.all_games)
-        #if Review.all_games.any? {|game| game.name = game_name} <-- is there any game with that name?
+        #if Review.all_games.any? {|game| game.name == game_name} <-- is there any game with that name?
         #    Review.all.select {|review| review.game.name: game_name} <--Select all reviews whose @game(obj)'s @name = game_name
         #else 
         # puts "No reviews found for a game named #{game_name}.Try again? Type Y for yes, type any other key to exit to main menu."
